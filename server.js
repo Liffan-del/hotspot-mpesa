@@ -161,6 +161,21 @@ app.get("/payments", async (req, res) => {
 
   res.json(data);
 });
+app.get("/vouchers", async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("vouchers")
+      .select("*")
+      .order("id", { ascending: false });
+
+    if (error) throw error;
+
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Failed to fetch vouchers" });
+  }
+});
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server running on port 3000");
 });
