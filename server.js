@@ -176,6 +176,8 @@ app.get("/vouchers", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch vouchers" });
   }
 });
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Server running on port 3000");
+const PORT = process.env.PORT;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("Server running on port", PORT);
 });
