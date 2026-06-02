@@ -176,6 +176,7 @@ app.get("/vouchers", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch vouchers" });
   }
 });
+
 const PORT = process.env.PORT;
 
 app.listen(PORT, "0.0.0.0", () => {
