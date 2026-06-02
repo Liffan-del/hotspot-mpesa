@@ -123,6 +123,7 @@ app.post("/create-payment", async (req, res) => {
   const { phone, amount, plan, speed } = req.body;
 
   try {
+    // 1. Save payment
     const { data, error } = await supabase
       .from("payments")
       .insert([
@@ -133,13 +134,40 @@ app.post("/create-payment", async (req, res) => {
           speed,
           status: "pending"
         }
-      ]);
+      ])
+      .select()
+      .single();
 
     if (error) throw error;
 
+    // 2. Get free voucher
+    const { data: voucher, error: voucherError } = await supabase
+      .from("vouchers")
+      .select("*")
+      .is("activated_at", null)
+      .limit(1)
+      .single();
+
+    if (voucherError || !voucher) {
+      return res.json({
+        message: "Payment saved but no voucher available",
+        payment: data
+      });
+    }
+
+    // 3. Mark voucher as used
+    await supabase
+      .from("vouchers")
+      .update({ activated_at: new Date() })
+      .eq("id", voucher.id);
+
+    // 4. Return everything
     res.json({
-      message: "Payment saved (pending)",
-      data
+      message: "Payment saved and voucher assigned",
+      payment: data,
+      voucher: voucher.code,
+      plan: voucher.plan,
+      duration: voucher.duration_hours
     });
 
   } catch (err) {
