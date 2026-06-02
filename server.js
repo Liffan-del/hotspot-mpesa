@@ -149,18 +149,6 @@ app.post("/create-payment", async (req, res) => {
     });
   }
 });
-app.get("/payments", async (req, res) => {
-  const { data, error } = await supabase
-    .from("payments")
-    .select("*")
-    .order("id", { ascending: false });
-
-  if (error) {
-    return res.status(500).json(error);
-  }
-
-  res.json(data);
-});
 app.get("/vouchers", async (req, res) => {
   try {
     const { data, error } = await supabase
@@ -176,9 +164,9 @@ app.get("/vouchers", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch vouchers" });
   }
 });
-
-const PORT = process.env.PORT;
+console.log("PORT FROM RENDER:", process.env.PORT);
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log("Server running on port", PORT);
+  console.log("Server running on port:", PORT);
 });
