@@ -1,0 +1,14 @@
+[
+  {
+    "username": "254703514345",
+    "password": "CW2026",
+    "package": "6 Hours",
+    "speed": "5 Mbps",
+    "duration": "6h",
+    "macAddress": null,
+    "sharedUsers": 1,
+    "bindMacAddress": true,
+    "status": "active",
+    "activatedAt": "2026-05-20T19:42:15.482Z"
+  }
+]

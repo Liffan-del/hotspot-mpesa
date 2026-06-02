@@ -1,0 +1,80 @@
+{
+  "companyName": "CHEAPEST WIFI",
+  "tagline": "Saving on Browsing",
+  "customerCare": "0703514345",
+  "currency": "KES",
+  "primaryColor": "#2563eb",
+  "secondaryColor": "#06b6d4",
+  "domain": "cheapestwifi.co.ke",
+
+  "mpesa": {
+    "consumerKey": "",
+    "consumerSecret": "",
+    "passkey": "",
+    "shortcode": "174379"
+  },
+
+  "hotspot": {
+    "sharedUsers": 1,
+    "bindMacAddress": true,
+    "preventHotspotSharing": true,
+    "defaultPassword": "CW2026"
+  },
+
+  "packages": [
+    {
+      "name": "1 Hour",
+      "price": 10,
+      "speed": "5 Mbps",
+      "duration": "1h"
+    },
+    {
+      "name": "3 Hours",
+      "price": 15,
+      "speed": "5 Mbps",
+      "duration": "3h"
+    },
+    {
+      "name": "6 Hours",
+      "price": 20,
+      "speed": "5 Mbps",
+      "duration": "6h"
+    },
+    {
+      "name": "24 Hours",
+      "price": 30,
+      "speed": "5 Mbps",
+      "duration": "24h"
+    },
+    {
+      "name": "1 Week",
+      "price": 250,
+      "speed": "5 Mbps",
+      "duration": "7d"
+    },
+    {
+      "name": "2 Weeks",
+      "price": 500,
+      "speed": "5 Mbps",
+      "duration": "14d"
+    },
+    {
+      "name": "Monthly Basic",
+      "price": 1000,
+      "speed": "10 Mbps",
+      "duration": "30d"
+    },
+    {
+      "name": "Monthly Plus",
+      "price": 1500,
+      "speed": "15 Mbps",
+      "duration": "30d"
+    },
+    {
+      "name": "Monthly Premium",
+      "price": 2000,
+      "speed": "20 Mbps",
+      "duration": "30d"
+    }
+  ]
+}

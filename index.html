@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CHEAPEST WIFI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+<div class="bg-white/10 p-4 rounded-2xl text-center border border-white/20 mb-6">
+  <p class="text-sm uppercase tracking-widest text-slate-300">
+    Customer Care
+  </p>
+  <p class="text-xl font-bold text-emerald-300 mt-2">
+    0703 514 345 / 0795 575 880
+  </p>
+  <p class="text-xs text-slate-400 mt-1">
+    Available 24/7 for support, vouchers and activation issues
+  </p>
+</div>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-900 text-white">
+
+<!-- Background -->
+<div class="fixed inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.15),transparent_40%),radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.12),transparent_35%)] pointer-events-none"></div>
+
+<main class="relative z-10 max-w-5xl mx-auto p-4">
+
+  <!-- Header -->
+  <section class="text-center mb-8">
+    <h1 class="text-4xl font-bold text-emerald-300">CHEAPEST WIFI</h1>
+    <p class="text-slate-300">Fast Internet Access</p>
+  </section>
+
+  <!-- Packages -->
+  <section>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
+  <div class="package-card" onclick="selectPackage('1 Hour', 10, '5 Mbps')">
+    <h3>1 Hour</h3>
+    <p class="price">KSH 10</p>
+    <p>Max 5 Mbps</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('3 Hours', 15, '5 Mbps')">
+    <h3>3 Hours</h3>
+    <p class="price">KSH 15</p>
+    <p>Max 5 Mbps</p>
+  </div>
+
+  <div class="package-card featured" onclick="selectPackage('6 Hours', 20, '5 Mbps')">
+    <span class="badge">POPULAR</span>
+    <h3>6 Hours</h3>
+    <p class="price">KSH 20</p>
+    <p>Max 5 Mbps</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('24 Hours', 30, '5 Mbps')">
+    <h3>24 Hours</h3>
+    <p class="price">KSH 30</p>
+    <p>Max 5 Mbps</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('24 Hours Pro', 50, '15 Mbps')">
+    <h3>24 Hours Pro</h3>
+    <p class="price">KSH 50</p>
+    <p>Max 15 Mbps</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('1 Week', 250, '5 Mbps')">
+    <h3>1 Week</h3>
+    <p class="price">KSH 250</p>
+    <p>Max 5 Mbps</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('2 Weeks', 500, '5 Mbps')">
+    <h3>2 Weeks</h3>
+    <p class="price">KSH 500</p>
+    <p>Max 5 Mbps</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('Monthly Basic', 1000, '10 Mbps')">
+    <h3>Monthly Basic</h3>
+    <p class="price">KSH 1,000</p>
+    <p>Max 10 Mbps</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('Monthly Plus', 1500, '15 Mbps')">
+    <h3>Monthly Plus</h3>
+    <p class="price">KSH 1,500</p>
+    <p>Max 15 Mbps</p>
+  </div>
+
+  <div class="package-card" onclick="selectPackage('Monthly Premium', 2000, '20 Mbps')">
+    <h3>Monthly Premium</h3>
+    <p class="price">KSH 2,000</p>
+    <p>Max 20 Mbps</p>
+  </div>
+
+</div>
+  </section>
+
+  <!-- Voucher -->
+  <section class="bg-white/10 p-4 rounded-xl mb-6">
+    <h2 class="text-xl mb-2">Voucher</h2>
+    <input id="voucherInput" class="w-full p-2 text-black rounded" placeholder="Enter voucher code" />
+    <button onclick="activateVoucher()" class="mt-3 bg-emerald-500 w-full p-2 rounded">
+      Activate Voucher
+    </button>
+  </section>
+
+  <!-- Login -->
+  <section class="bg-white/10 p-4 rounded-xl mb-6">
+    <h2 class="text-xl mb-2">Login Portal</h2>
+    <input class="w-full p-2 mb-2 text-black rounded" placeholder="Username" />
+    <input class="w-full p-2 text-black rounded" placeholder="Password" type="password" />
+    <button class="mt-3 bg-blue-500 w-full p-2 rounded">Sign In</button>
+  </section>
+
+</main>
+
+<!-- Modal -->
+<div id="modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center">
+  <div class="bg-white text-black p-6 rounded-xl w-80">
+    <h2 class="text-xl font-bold mb-2">Pay with M-PESA</h2>
+    <p id="selectedPackage"></p>
+    <input id="phoneInput" class="w-full p-2 border rounded mt-2" placeholder="2547XXXXXXXX" />
+    <button onclick="payNow()" class="bg-green-500 w-full p-2 mt-3 rounded text-white">
+      Pay Now
+    </button>
+    <button onclick="closeModal()" class="w-full p-2 mt-2 bg-gray-300 rounded">
+      Cancel
+    </button>
+  </div>
+</div>
+
+<script>
+let selectedName = "";
+let selectedPrice = 0;
+let selectedSpeed = "";
+
+function selectPackage(name, price, speed) {
+  selectedName = name;
+  selectedPrice = price;
+  selectedSpeed = speed;
+
+  document.getElementById("selectedPackage").innerText =
+    name + " - KSH " + price + " (" + speed + ")";
+
+  document.getElementById("modal").classList.remove("hidden");
+}
+const packages = [
+  { name: "1 Hour", price: 10, speed: "5 Mbps" },
+  { name: "3 Hours", price: 15, speed: "5 Mbps" },
+  { name: "6 Hours", price: 20, speed: "5 Mbps" },
+  { name: "24 Hours", price: 30, speed: "5 Mbps" },
+  { name: "24 Hours Pro", price: 50, speed: "15 Mbps" },
+  { name: "1 Week", price: 250, speed: "5 Mbps" },
+  { name: "2 Weeks", price: 500, speed: "5 Mbps" },
+  { name: "Monthly Basic", price: 1000, speed: "10 Mbps" },
+  { name: "Monthly Plus", price: 1500, speed: "15 Mbps" },
+  { name: "Monthly Premium", price: 2000, speed: "20 Mbps" }
+];
+function closeModal() {
+  document.getElementById("modal").classList.add("hidden");
+}
+
+function payNow() {
+  const phone = document.getElementById("phoneInput").value;
+
+  if (!phone) {
+    alert("Enter phone number");
+    return;
+  }
+
+  alert("STK Push will be connected later");
+}
+
+function activateVoucher() {
+  const code = document.getElementById("voucherInput").value;
+
+  if (!code) {
+    alert("Enter voucher code");
+    return;
+  }
+
+  alert("Voucher received: " + code);
+}
+</script>
+
+</body>
+</html>
