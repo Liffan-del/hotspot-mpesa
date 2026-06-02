@@ -3,12 +3,9 @@ const { createHotspotUser } = require("./mikrotik");
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
-const { createClient } = require("@supabase/supabase-js");
+
 const app = express();
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-);
+
 app.use(cors());
 app.use(express.json());
 
@@ -118,48 +115,6 @@ app.get("/activate-test", async (req, res) => {
       error: error.message
     });
   }
-});
-app.post("/create-payment", async (req, res) => {
-  const { phone, amount, plan, speed } = req.body;
-
-  try {
-    const { data, error } = await supabase
-      .from("payments")
-      .insert([
-        {
-          phone,
-          amount,
-          plan,
-          speed,
-          status: "pending"
-        }
-      ]);
-
-    if (error) throw error;
-
-    res.json({
-      message: "Payment saved (pending)",
-      data
-    });
-
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      error: "Failed to save payment"
-    });
-  }
-});
-app.get("/payments", async (req, res) => {
-  const { data, error } = await supabase
-    .from("payments")
-    .select("*")
-    .order("id", { ascending: false });
-
-  if (error) {
-    return res.status(500).json(error);
-  }
-
-  res.json(data);
 });
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server running on port 3000");
