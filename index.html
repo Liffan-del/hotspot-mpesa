@@ -181,20 +181,67 @@ async function loadVouchers() {
       return;
     }
 
-    container.innerHTML = data.map(v => `
-      <div class="bg-white/10 border border-white/20 p-4 rounded-xl mb-3">
-        <div class="font-bold text-emerald-300">${v.code}</div>
-        <div>Plan: ${v.plan}</div>
-        <div>Duration: ${v.duration_hours} hrs</div>
-      </div>
-    `).join("");
+const unique = [...new Map(data.map(v => [v.code, v])).values()];
 
-  } catch (err) {
-    console.log(err);
-    document.getElementById("voucherList").innerHTML =
-      "<p style='color:red'>Failed to load vouchers</p>";
-  }
-}
+container.innerHTML = `
+  <div class="grid grid-cols-2 gap-4">
+    ${unique.map(v => {
+
+      // Price-based color logic
+      let color = "from-slate-800 to-slate-900";
+      let status = "Active";
+
+      const price = Number(v.code);
+
+      if (price <= 20) {
+        color = "from-emerald-900/50 to-emerald-700/30";
+        status = "Active";
+      } else if (price <= 250) {
+        color = "from-blue-900/50 to-blue-700/30";
+        status = "Active";
+      } else if (price <= 1000) {
+        color = "from-purple-900/50 to-purple-700/30";
+        status = "Active";
+      } else {
+        color = "from-red-900/50 to-red-700/30";
+        status = "Premium";
+      }
+
+      return `
+        <div class="bg-gradient-to-br ${color}
+                    border border-white/20
+                    rounded-xl p-4 shadow-lg
+                    hover:scale-105 transition-transform duration-200">
+
+          <div class="flex justify-between items-center">
+            <div class="text-xl font-bold text-white">
+              KSH ${v.code}
+            </div>
+
+            <span class="text-xs px-2 py-1 rounded-full bg-black/40">
+              ${status}
+            </span>
+          </div>
+
+          <div class="mt-2 text-sm text-white/80">
+            ${v.plan}
+          </div>
+
+          <div class="text-xs text-white/60 mt-1">
+            ${v.duration_hours} hours
+          </div>
+
+          <button class="mt-3 w-full bg-black/30 hover:bg-black/60
+                         py-2 rounded-lg transition">
+            Buy Now
+          </button>
+
+        </div>
+      `;
+    }).join("")}
+  </div>
+`;
+
 loadVouchers();
 function payNow() {
   const phone = document.getElementById("phoneInput").value;
