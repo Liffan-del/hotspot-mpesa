@@ -115,7 +115,12 @@
     <input class="w-full p-2 text-black rounded" placeholder="Password" type="password" />
     <button class="mt-3 bg-blue-500 w-full p-2 rounded">Sign In</button>
   </section>
-
+<section class="bg-white/10 p-4 rounded-xl mb-6">
+  <h2 class="text-xl mb-3">Available Vouchers</h2>
+  <div id="voucherList">
+    <p>Loading vouchers...</p>
+  </div>
+</section>
 </main>
 
 <!-- Modal -->
@@ -163,7 +168,33 @@ const packages = [
 function closeModal() {
   document.getElementById("modal").classList.add("hidden");
 }
+async function loadVouchers() {
+  try {
+    const res = await fetch("/vouchers");
+    const data = await res.json();
 
+    const container = document.getElementById("voucherList");
+
+    if (!data.length) {
+      container.innerHTML = "<p>No vouchers available</p>";
+      return;
+    }
+
+    container.innerHTML = data.map(v => `
+      <div class="bg-black/20 p-3 rounded mb-2">
+        <div><b>${v.code}</b></div>
+        <div>Plan: ${v.plan}</div>
+        <div>Hours: ${v.duration_hours}</div>
+      </div>
+    `).join("");
+
+  } catch (err) {
+    document.getElementById("voucherList").innerHTML =
+      "<p>Failed to load vouchers</p>";
+  }
+}
+
+loadVouchers();
 function payNow() {
   const phone = document.getElementById("phoneInput").value;
 
