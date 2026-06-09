@@ -168,6 +168,7 @@ const packages = [
 function closeModal() {
   document.getElementById("modal").classList.add("hidden");
 }
+
 async function loadVouchers() {
   try {
     const res = await fetch("/vouchers");
@@ -181,19 +182,19 @@ async function loadVouchers() {
     }
 
     container.innerHTML = data.map(v => `
-      <div class="bg-black/20 p-3 rounded mb-2">
-        <div><b>${v.code}</b></div>
+      <div class="bg-white/10 border border-white/20 p-4 rounded-xl mb-3">
+        <div class="font-bold text-emerald-300">${v.code}</div>
         <div>Plan: ${v.plan}</div>
-        <div>Hours: ${v.duration_hours}</div>
+        <div>Duration: ${v.duration_hours} hrs</div>
       </div>
     `).join("");
 
   } catch (err) {
+    console.log(err);
     document.getElementById("voucherList").innerHTML =
-      "<p>Failed to load vouchers</p>";
+      "<p style='color:red'>Failed to load vouchers</p>";
   }
 }
-
 loadVouchers();
 function payNow() {
   const phone = document.getElementById("phoneInput").value;
