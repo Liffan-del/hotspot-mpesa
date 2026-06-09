@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const { createHotspotUser } = require("./mikrotik");
 const express = require("express");
 const cors = require("cors");
@@ -13,8 +14,6 @@ app.use(cors());
 app.use(express.json());
 
 // Home route
-const path = require("path");
-
 app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
