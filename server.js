@@ -13,10 +13,13 @@ app.use(cors());
 app.use(express.json());
 
 // Home route
-app.get("/", (req, res) => {
-  res.send("Hotspot M-PESA Backend Running");
-});
+const path = require("path");
 
+app.use(express.static(__dirname));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 // Get OAuth token
 async function getToken() {
   const auth = Buffer.from(
